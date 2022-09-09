@@ -3,6 +3,7 @@
 int[] CreateArray(int num)
 {
     int[] array = new int[num];
+    Console.WriteLine($"Наш массив из {num} случайных чисел:");
     return array;
 }
 
@@ -16,31 +17,18 @@ void FillArray(int[] randomArray)
 
 void PrintArray(int[] array)
 {
+
     foreach (int elem in array)
     {
         Console.Write($"{elem} ");
     }
+    Console.WriteLine();
 }
 
-while (true)
+void FindSome(int[] array)
 {
-    Console.Write("Введите размер массива. "); // в задаче 8, но это не интересно, вы говорили избавляться от волшебных чисел)
-
-    bool numBool = false;
-    int num = 0;
     int count1 = 0;
     int count2 = 0;
-
-    while (!numBool)
-    {
-        Console.WriteLine("Число должно быть целым.");
-        numBool = int.TryParse(Console.ReadLine()!, out num);
-    }
-    int[] array = CreateArray(num);
-    FillArray(array);
-    Console.WriteLine($"Наш массив из {num} случайных чисел:");
-    PrintArray(array);
-
     foreach (int elem in array)
     {
         if (elem % 2 == 0)
@@ -51,10 +39,80 @@ while (true)
     }
     Console.WriteLine();
     Console.WriteLine($"В массиве {count1} четных и {count2} нечетных чисел");
+}
+
+void FindAvg(int[] array)
+{
+    double avg = 0;
+    foreach (int elem in array)
+    {
+        avg += elem;
+    }
+    avg /= array.Length;
+
+    Console.WriteLine($"Среднее арифметическое -> {avg}");
+}
+
+void FindMax(int[] array)
+{
+    double max = array[0];
+    foreach (int elem in array)
+    {
+        if (max < elem)
+        { max = elem; }
+    }
+
+    Console.WriteLine($"Самый большой элемент -> {max}");
+}
+
+void CheckArray(int[] array)
+{
+    string msg = "";
+    for (int i = 0; i < array.Length - 1; i++)
+    {
+        if (array[i] > array[i + 1])
+        {
+            msg = "Чуда не случилось, числа не по возрастанию(";
+            Console.WriteLine($"{msg}");
+            return;
+        }
+        else
+        {
+            msg = "О ЧУДО! Бог рандома расставил все по подярочку!";
+        }
+
+    }
+
+    Console.WriteLine($"{msg}");
+}
+
+while (true)
+{
+    Console.Write("Введите размер массива. "); // в задаче 8, но это не интересно, вы говорили избавляться от волшебных чисел)
+
+    bool numBool = false;
+    int num = 0;
+
+    while (!numBool)
+    {
+        Console.WriteLine("Число должно быть целым.");
+        numBool = int.TryParse(Console.ReadLine()!, out num);
+    }
+
+
+    int[] array = CreateArray(num);
+    FillArray(array);
+    PrintArray(array);
+    FindSome(array);
+    FindAvg(array);
+    FindMax(array);
+    CheckArray(array);
+
 
     Console.WriteLine();
     Console.WriteLine("Enter чтобы продолжить / q чтобы выйти");
     ConsoleKeyInfo quite = Console.ReadKey();
     Console.WriteLine();
     if (quite.KeyChar == 'q' || quite.KeyChar == 'й') break;
+    Console.Clear();
 }
